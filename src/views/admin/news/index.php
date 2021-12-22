@@ -137,6 +137,7 @@
                 dataType: "json",
                 success: function (response) {
                     if (response.success == true) {
+                        insertRow(response.result[0]);
                         $(".close").click()
                         $("#form-result").html("<div class='alert alert-success'> " + response.message + "</div>");
                     } else {
@@ -144,13 +145,16 @@
                     }
                     window.setTimeout(function () {
                         $("#form-result").html("");
-                        window.location.href = "/admin-page";
                     }, 5000);
                 }
             })
             return false;
         });
 
+        function insertRow(data) {
+            var trHtml = "<tr><td>0</td><td>" + data.title + "</td><td>" + data.author + "</td><td>" + data.active + "</td><td>" + data.created_at + "</td><td><button type='button' class='btn btn-danger delete-btn' new-id='" + data.id + "'>delete</button></td></tr>";
+            $("table tbody").prepend(trHtml);
+        }
 
         $(document).on('click', '.delete-btn', function (e) {
             e.preventDefault();
